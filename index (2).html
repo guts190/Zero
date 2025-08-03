@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>zeroLP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: #0b0b0f;
+      color: #fff;
+      padding: 100px 20px 20px 20px; /* top padding increased to 100px */
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      background: #14141c;
+      padding: 15px 30px;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.03);
+      animation: slideDown 0.8s ease-out forwards;
+      overflow-x: auto; /* allow horizontal scroll to keep all buttons visible */
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff00ff, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-right: 2rem; /* space between logo and nav */
+      flex-shrink: 0; /* prevent shrinking */
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-shrink: 0; /* prevent shrinking */
+      /* no wrapping */
+    }
+    .nav-links button {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      position: relative;
+    }
+    .nav-links button::after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: #ff00ff;
+      width: 0;
+      transition: width 0.3s;
+      margin-top: 5px;
+    }
+    .nav-links button:hover::after {
+      width: 100%;
+    }
+    .hero {
+      text-align: center;
+      margin: 3rem 0;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      color: #ccc;
+      margin-bottom: 2rem;
+    }
+    .hero .buttons button {
+      background: linear-gradient(135deg, #ff00ff, #00ffff);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      color: #fff;
+      border-radius: 10px;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+    .hero .buttons button:active {
+      transform: scale(0.95);
+    }
+    .section {
+      margin: 3rem 0;
+    }
+    .section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .coin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+    .coin-card {
+      background: #1a1a2e;
+      padding: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+    .coin-card:hover {
+      transform: scale(1.05);
+      background: #2a2a3f;
+    }
+    .features {
+      background: #111;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-top: 3rem;
+    }
+    .features ul {
+      list-style: none;
+      line-height: 2;
+      padding-left: 0;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #888;
+      margin: 2rem 0;
+    }
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      animation: fadeIn 0.4s ease;
+    }
+    .modal-content {
+      background: #1a1a2e;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      white-space: pre-line;
+      animation: popIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">zeroLP</div>
+    <div class="nav-links">
+      <button onclick="openModal('Create your meme coin now!')">Create</button>
+      <button onclick="openModal('Start trading meme coins!')">Trade</button>
+      <button onclick="openModal('Connect your Phantom wallet!')">Connect Wallet</button>
+      <button onclick="openModal('Choose your language')">🌐</button>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <h1>Launch your own meme coins with $1</h1>
+    <p>Create, trade and degen your meme coins — instantly.</p>
+    <div class="buttons">
+      <button onclick="openModal('Create your coin now!')">Start Creating</button>
+      <button onclick="openModal('Trade top meme coins!')">Start Trading</button>
+    </div>
+  </section>
+  
+  <section class="section">
+    <h2>🚀 Featured Coins</h2>
+    <div class="coin-grid">
+      <div class="coin-card" onclick="openModal('Dogewhiz\nPrice: 0.002 SOL\nVolume: 10.4 SOL\nBuys: 183')">
+        <h3>Dogewhiz</h3>
+        <p>Price: 0.002 SOL</p>
+        <p>Volume: 10.4 SOL</p>
+        <p>Buys: 183</p>
+      </div>
+      <div class="coin-card" onclick="openModal('PepeGod\nPrice: 0.006 SOL\nVolume: 24.1 SOL\nBuys: 350')">
+        <h3>PepeGod</h3>
+        <p>Price: 0.006 SOL</p>
+        <p>Volume: 24.1 SOL</p>
+        <p>Buys: 350</p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section">
+    <h2>🔥 Main Coins</h2>
+    <div class="coin-grid">
+      <div class="coin-card" onclick="openModal('RugKing\nPrice: 0.001 SOL\nVolume: 4.5 SOL\nBuys: 90')">
+        <h3>RugKing</h3>
+        <p>Price: 0.001 SOL</p>
+        <p>Volume: 4.5 SOL</p>
+        <p>Buys: 90</p>
+      </div>
+      <div class="coin-card" onclick="openModal('SnipeMax\nPrice: 0.004 SOL\nVolume: 13.7 SOL\nBuys: 200')">
+        <h3>SnipeMax</h3>
+        <p>Price: 0.004 SOL</p>
+        <p>Volume: 13.7 SOL</p>
+        <p>Buys: 200</p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="features">
+    <h2>✨ What makes zeroLP different?</h2>
+    <ul>
+      <li>💰 Launch meme coins with just $1 — no initial liquidity</li>
+      <li>📈 Dynamic pricing powered by bonding curves</li>
+      <li>🧠 Buyers fund liquidity, not the developers</li>
+      <li>🔁 Sell your tokens back to the contract anytime</li>
+      <li>💸 Platform earns 0.5% fee per transaction</li>
+      <li>🌐 Trade any token on Solana like Uniswap/Jupiter</li>
+    </ul>
+  </section>
+  <section class="section">
+  <h2>💬 Reviews</h2>
+  <div class="reviews">
+    <div class="review">
+      <strong>@solDegen69</strong>: “This platform changed the game! Launched my coin in 2 mins.”
+    </div>
+    <div class="review">
+      <strong>@rugPullSurvivor</strong>: “Finally a launchpad where I don’t get rugged!”
+    </div>
+    <div class="review">
+      <strong>@memeOverlord</strong>: “zeroLP is fire 🔥🔥. Degens only!”
+    </div>
+  </div>
+</section>
+  <footer>
+    <p>© 2025 zeroLP — Built for degens, not devs.</p>
+  </footer>
+  
+  <div id="modal" class="modal" style="display: none;" onclick="closeModal(event)">
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+  
+  <script>
+    function openModal(content) {
+      document.getElementById('modal-content').innerText = content;
+      document.getElementById('modal').style.display = 'flex';
+    }
+    function closeModal(event) {
+      if (event.target.id === 'modal') {
+        document.getElementById('modal').style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
