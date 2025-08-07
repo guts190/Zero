@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Token | zeroLP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --card: #1a1a2e;
+      --input: #111119;
+      --accent: linear-gradient(135deg, #00ffff, #ff00ff);
+      --muted: #bbb;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: 'Inter', sans-serif;
+      color: white;
+    }
+
+    /* 🔥 Global Animate In */
+    .page-animate {
+      animation: fadeSlideIn 0.6s ease-out both;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 🧊 Click interactions only — no resize, no color shift */
+    @keyframes clickFlash {
+      0% { box-shadow: 0 0 0 transparent; }
+      50% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.4); }
+      100% { box-shadow: 0 0 0 transparent; }
+    }
+
+    .button-clicked {
+      animation: clickFlash 0.35s ease-out;
+    }
+
+    /* 🔷 Pulse-in entrance */
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .pop-in {
+      animation: popIn 0.5s ease-out both;
+    }
+
+    /* Styling */
+    .container {
+      max-width: 720px;
+      margin: 4rem auto;
+      background: var(--card);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.04);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, #00ffff, #ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: popIn 0.5s ease-in-out both;
+    }
+
+    .btn-wallet {
+      background: var(--accent);
+      border: none;
+      color: #000;
+      padding: 0.7rem 1.4rem;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .btn-wallet:hover {
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.35);
+    }
+
+    label {
+      display: block;
+      margin-top: 1.4rem;
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--input);
+      border: 1px solid #333;
+      color: white;
+      font-size: 1rem;
+      border-radius: 10px;
+      transition: 0.2s ease-in-out;
+    }
+
+    input:focus,
+    textarea:focus {
+      border: 1px solid #00ffff !important;
+      box-shadow: 0 0 6px rgba(0, 255, 255, 0.3);
+      outline: none;
+    }
+
+    input,
+    textarea,
+    button,
+    select {
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .file-upload {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      margin-top: 0.5rem;
+      background: #111119;
+      border: 1px solid #444;
+      text-align: center;
+      padding: 0.8rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .file-upload input[type="file"] {
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .file-name {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+
+    .toggle-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      background: #333;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 24px;
+      transition: 0.3s ease;
+    }
+
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .switch input:checked + .slider {
+      background: linear-gradient(90deg, #ff00ff, #00ffff);
+    }
+
+    .switch input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    .note {
+      background: #111119;
+      padding: 1rem;
+      margin-top: 2rem;
+      border-left: 4px solid #00ffff;
+      border-radius: 10px;
+      color: var(--muted);
+    }
+
+    .btn-submit {
+      margin-top: 2rem;
+      width: 100%;
+      background: var(--accent);
+      color: black;
+      font-weight: 700;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.35);
+    }
+
+    .preview-card {
+      margin-top: 2rem;
+      background: #101018;
+      padding: 1rem;
+      border-radius: 12px;
+      color: #ccc;
+    }
+
+    .preview-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 1px solid #333;
+    }
+
+    /* 🚨 Trademark Line */
+    .trademark {
+      color: #666;
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="trademark">© 2025 zeroLP. All rights reserved.</div>
+
+  <div class="container page-animate">
+    <header>
+      <div class="logo pop-in">zeroLP</div>
+      <button class="btn-wallet pop-in" onclick="connectWallet(this)">Connect Wallet</button>
+    </header>
+
+    <form id="tokenForm" onsubmit="submitToken(event)">
+      <label for="name">Token Name</label>
+      <input type="text" id="name" required placeholder="e.g. AstroFren" />
+
+      <label for="symbol">Symbol</label>
+      <input type="text" id="symbol" required placeholder="e.g. $ASTRO" />
+
+      <label for="supply">Total Supply</label>
+      <input type="number" id="supply" required placeholder="6900000000" />
+
+      <label for="desc">Description</label>
+      <textarea id="desc" placeholder="What makes your token moonworthy? 🔥"></textarea>
+
+      <label for="website">Website</label>
+      <input type="text" id="website" placeholder="https://yourproject.io" />
+
+      <label for="twitter">Twitter</label>
+      <input type="text" id="twitter" placeholder="@yourhandle" />
+
+      <label>Token Icon</label>
+      <div class="file-upload">
+        <input type="file" id="logo" accept="image/*" onchange="previewLogo(event)" />
+        📁 Choose Logo File
+      </div>
+      <div id="fileName" class="file-name"></div>
+
+      <div class="toggle-row">
+        <label class="switch">
+          <input type="checkbox" id="showSocials" />
+          <span class="slider"></span>
+        </label>
+        <span>Include Social Info</span>
+      </div>
+
+      <div class="note">
+        ⚠️ Once minted, name, symbol, supply can’t be changed.
+      </div>
+
+      <button class="btn-submit pop-in" type="submit" id="launchBtn">🚀 Launch Token</button>
+
+      <div id="preview" class="preview-card"></div>
+    </form>
+  </div>
+
+  <script>
+    function connectWallet(button) {
+      button.classList.add("button-clicked");
+      setTimeout(() => {
+        button.classList.remove("button-clicked");
+      }, 400);
+    }
+
+    function previewLogo(e) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById("fileName").textContent = file.name;
+        const imgUrl = URL.createObjectURL(file);
+        const prev = document.getElementById("preview");
+
+        const existing = document.querySelector(".preview-logo");
+        if (existing) existing.remove();
+
+        const img = document.createElement("img");
+        img.src = imgUrl;
+        img.classList.add("preview-logo");
+        prev.prepend(img);
+      }
+    }
+
+    function submitToken(e) {
+      e.preventDefault();
+      const btn = document.getElementById("launchBtn");
+      btn.classList.add("button-clicked");
+
+      setTimeout(() => {
+        btn.classList.remove("button-clicked");
+      }, 400);
+
+      // Grab user data
+      const name = document.getElementById("name").value.trim();
+      const symbol = document.getElementById("symbol").value.trim();
+      const supply = document.getElementById("supply").value.trim();
+      const desc = document.getElementById("desc").value.trim();
+      const showSocials = document.getElementById("showSocials").checked;
+      const website = document.getElementById("website").value.trim();
+      const twitter = document.getElementById("twitter").value.trim();
+
+      const preview = document.getElementById("preview");
+      preview.innerHTML = `
+        <h3>✅ Token Preview</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Symbol:</strong> ${symbol}</p>
+        <p><strong>Total Supply:</strong> ${Number(supply).toLocaleString()}</p>
+        <p><strong>Description:</strong> ${desc || "—"}</p>
+        ${showSocials ? `<p><strong>Website:</strong> ${website || "—"}</p><p><strong>Twitter:</strong> ${twitter || "—"}</p>` : ""}
+      `;
+    }
+  </script>
+</body>
+</html>

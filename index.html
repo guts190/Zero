@@ -2,167 +2,146 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>zeroLP</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-    body {
-      background-color: #0b0b0f;
-      color: #fff;
-      padding: 100px 20px 20px 20px; /* top padding increased to 100px */
-    }
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: #0b0b0f; color: #fff; margin: 0; padding: 100px 20px 30px 20px; }
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 999;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      background: #14141c;
-      padding: 15px 30px;
-      border-radius: 0 0 12px 12px;
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.03);
-      animation: slideDown 0.8s ease-out forwards;
-      overflow-x: auto; /* allow horizontal scroll to keep all buttons visible */
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 10;
+      display: flex; justify-content: flex-start; align-items: center;
+      background: #14141c; padding: 15px 30px; border-radius: 0 0 12px 12px;
+      box-shadow: 0 0 12px rgba(255,255,255,0.03); min-width: 320px;
     }
     .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      background: linear-gradient(90deg, #ff00ff, #00ffff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-right: 2rem; /* space between logo and nav */
-      flex-shrink: 0; /* prevent shrinking */
+      font-size: 1.5rem; font-weight: bold;
+      background: linear-gradient(90deg,#ff00ff,#00ffff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-right: 2rem; flex-shrink: 0;
     }
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      flex-shrink: 0; /* prevent shrinking */
-      /* no wrapping */
-    }
+    .nav-links { display: flex; gap: 1.5rem; }
     .nav-links button {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 1rem;
-      cursor: pointer;
-      position: relative;
+      background: transparent; border: none; color: #fff; font-size: 1rem; cursor: pointer; position: relative;
     }
-    .nav-links button::after {
-      content: '';
-      display: block;
-      height: 2px;
-      background: #ff00ff;
-      width: 0;
-      transition: width 0.3s;
-      margin-top: 5px;
+    .nav-links button::after { content: ''; display: block; height: 2px; background: #ff00ff; width: 0; transition: width 0.3s; margin-top: 5px;}
+    .nav-links button:hover::after { width: 100%; }
+    .wallet-status {
+      margin-left: auto; display: flex; align-items: center; gap: 1rem;
     }
-    .nav-links button:hover::after {
-      width: 100%;
+    .wallet-pill {
+      background: linear-gradient(90deg,#222,#333);
+      border: 1.5px solid #00ffff; border-radius: 18px; padding: 0.23em 1em;
+      font-size: 0.97em; display: flex; align-items: center; gap: 0.5em;
     }
-    .hero {
-      text-align: center;
-      margin: 3rem 0;
+    #wallet-address { font-family: 'Inter',monospace; color: #ff00ff; }
+    .wallet-pill button {
+      background: none; border: none; color: #00ffff; cursor: pointer; font-size: 0.92em; padding: 0 0.5em;
     }
-    .hero h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      color: #ccc;
-      margin-bottom: 2rem;
-    }
+    .hero { text-align: center; margin: 3rem 0 2rem 0; }
+    .hero h1 { font-size: 2rem; margin-bottom: 1rem;}
+    .hero p { color: #ccc; margin-bottom: 2rem;}
     .hero .buttons button {
       background: linear-gradient(135deg, #ff00ff, #00ffff);
-      border: none;
-      padding: 0.8rem 1.5rem;
-      color: #fff;
-      border-radius: 10px;
-      margin: 0 0.5rem;
-      cursor: pointer;
-      font-weight: bold;
-      transition: transform 0.3s ease;
+      border: none; padding: 0.8rem 1.5rem;
+      color: #fff; border-radius: 10px; margin: 0 0.5rem;
+      cursor: pointer; font-weight: bold;
+      box-shadow: 0 0 20px rgba(255,0,255,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .hero .buttons button:active {
-      transform: scale(0.95);
-    }
-    .section {
-      margin: 3rem 0;
-    }
-    .section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    .coin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.5rem;
-    }
+    .hero .buttons button:hover { box-shadow: 0 0 32px #09b9ff98; transform: scale(1.03);}
+    .hero .buttons button:active { transform: scale(0.96);}
+    .section { margin: 3rem 0; }
+    .section h2 { font-size: 1.45rem; margin-bottom: 1rem;}
+    .coin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;}
     .coin-card {
       background: #1a1a2e;
-      padding: 1rem;
+      padding: 1.1rem;
       border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.2s, background 0.3s;
+      transition: transform 0.18s, background 0.22s;
+      display: flex; flex-direction: column; align-items: flex-start;
+      box-shadow: 0 2px 8px rgba(0,255,255,0.04);
+      border:1.5px solid #272740;
+      min-height: 150px; position:relative;
     }
-    .coin-card:hover {
-      transform: scale(1.05);
-      background: #2a2a3f;
-    }
-    .features {
-      background: #111;
-      padding: 2rem;
-      border-radius: 12px;
-      margin-top: 3rem;
-    }
-    .features ul {
-      list-style: none;
-      line-height: 2;
-      padding-left: 0;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #888;
-      margin: 2rem 0;
-    }
+    .coin-card:hover { transform: scale(1.055); background: #2a2a3f;}
+    .coin-card .coin-logo { width:36px; height:36px; border-radius:10px;background:#18181e;object-fit:cover;margin-bottom:.7em;}
+    .coin-card .token-badge{display:inline-block; background:#160f29; color:#f0f; font-size:.73em; border-radius:7px; padding:0 7px; margin-left:6px;}
+    .coin-card .verified{color:#00ffff;font-size:1em;margin-left:.2em;}
+    .features { background: #111; padding: 2rem; border-radius: 12px; margin-top: 3rem;}
+    .features ul { list-style: none; line-height: 2; padding-left: 0;}
+    .reviews {margin-top:1.3rem;}
+    .review { position: relative; background: #13141e; color: #eee; padding:1em 1.1em 1em 3.4em;margin-bottom:1em;border-radius:10px;}
+    .review:before { content:''; display:block; width:36px;height:36px;border-radius:50%;background:#2ee;text-align:center; position:absolute; left:1em;top:1em; box-shadow: 0 2px 8px rgba(0,255,255,0.22);}
+    .profile-soldegen:before { background-image:url('https://api.dicebear.com/7.x/identicon/svg?seed=soldg');background-size:cover;}
+    .profile-rugsurvivor:before { background-image:url('https://api.dicebear.com/7.x/identicon/svg?seed=rugSurv');background-size:cover;}
+    .profile-memeoverlord:before { background-image:url('https://api.dicebear.com/7.x/identicon/svg?seed=memeOvr');background-size:cover;}
+    .review strong { color: #ff00ff;}
+   <footer style="text-align: center; padding: 16px 0;">
+  <div style="display: inline-flex; gap: 12px; align-items: center; justify-content: center; margin-bottom: 8px;">
+    <a href="https://t.me/+664FOsUtU403NGNl" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="22" alt="Telegram" />
+    </a>
+    <a href="https://discord.gg/yHKXTZRJ" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Discord_logo.svg" width="22" alt="Discord" />
+    </a>
+  </div>
+<footer style="background: #111; color: #f9f9f9; padding: 32px 0; text-align: center; font-family: 'Inter', sans-serif; letter-spacing: 0.5px;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <p style="font-size: 1.15em; margin-bottom: 14px;">&copy; 2025 zero lp • meme coin trading simplified</p>
+    <nav style="margin: 12px 0;">
+      <a href="#" style="color: #f9f9f9; margin: 0 16px; text-decoration: none; font-weight: 500;">Home</a>
+      <a href="#" style="color: #f9f9f9; margin: 0 16px; text-decoration: none; font-weight: 500;">Trade</a>
+      <a href="#" style="color: #f9f9f9; margin: 0 16px; text-decoration: none; font-weight: 500;">Docs</a>
+    </nav>
+    <div style="margin-top: 18px;">
+      <a href="https://t.me/+u" target="_blank" style="margin: 0 8px; color: #28A8E9; font-size: 1.45em;" title="Telegram">
+        <i class="fab fa-telegram-plane"></i>
+      </a>
+      <a href="https://discord.gg/yHKXTZRJ" target="_blank" style="margin: 0 8px; color: #7289da; font-size: 1.45em;" title="Discord">
+        <i class="fab fa-discord"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+<!-- Font Awesome CDN (add in <head> if not included) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    </a>
+    <a href="https://discord.gg/yHKXTZRJ" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Discord_logo.svg" width="22" />
+    </a0
+  </div>
+</div>
+
+
     /* Modal Styles */
     .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      animation: fadeIn 0.4s ease;
-    }
+      position: fixed; top:0; left:0; width:100vw; height:100vh;
+      background: rgba(0,0,0,0.8);
+      display: flex; justify-content: center; align-items: center; z-index: 1000;
+      animation: fadeIn 0.28s ease;}
     .modal-content {
-      background: #1a1a2e;
-      padding: 2rem;
-      border-radius: 12px;
-      text-align: center;
-      white-space: pre-line;
-      animation: popIn 0.4s ease;
+      background: #1a1a2e; padding: 2rem 1.6rem 1.7rem 1.6rem; border-radius: 12px;
+      text-align: center; white-space: pre-line; animation: popIn 0.34s ease;
+      min-width: 260px; max-width: 92vw; position: relative;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .modal-content .modal-close {
+      position: absolute; top:0.87em; right:1em; color:#00ffff; background:none;border:none;font-size:1.19rem;cursor:pointer;
     }
-    @keyframes popIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .status-banner {
+      text-align:center; background:linear-gradient(90deg,#ff00ff,#00ffff); color:#222; font-weight:bold;
+      border-radius:22px; padding:0.45em 0; margin:1em auto 0 auto; max-width:340px; font-size:1em;
+      box-shadow: 0 2px 16px rgba(0,255,255,0.15); animation:fadeIn 0.45s;
+    }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    @keyframes popIn { from {transform:scale(0.8);opacity:0;} to {transform:scale(1);opacity:1;} }
+    @media (max-width:600px) {
+      header { padding:10px 8px;}
+      .logo { font-size:1.15rem;}
+      .coin-card { min-height: 130px;}
+      .modal-content{ padding:16px 8px;}
     }
   </style>
 </head>
@@ -170,58 +149,59 @@
   <header>
     <div class="logo">zeroLP</div>
     <div class="nav-links">
-      <button onclick="openModal('Create your meme coin now!')">Create</button>
+<button onclick="window.location.href='create.html'">Start Creating</button>
+
       <button onclick="openModal('Start trading meme coins!')">Trade</button>
-      <button onclick="openModal('Connect your Phantom wallet!')">Connect Wallet</button>
+      <button id="connectBtn" onclick="connectWallet()">Connect Wallet</button>
       <button onclick="openModal('Choose your language')">🌐</button>
     </div>
+    <div class="wallet-status" id="wallet-status"></div>
   </header>
-  
+
+  <div id="status-banner"></div>
+
   <section class="hero">
     <h1>Launch your own meme coins with $1</h1>
-    <p>Create, trade and degen your meme coins — instantly.</p>
+    <p>Create, trade, and degen your meme coins — instantly.</p>
     <div class="buttons">
       <button onclick="openModal('Create your coin now!')">Start Creating</button>
       <button onclick="openModal('Trade top meme coins!')">Start Trading</button>
     </div>
   </section>
-  
   <section class="section">
     <h2>🚀 Featured Coins</h2>
     <div class="coin-grid">
       <div class="coin-card" onclick="openModal('Dogewhiz\nPrice: 0.002 SOL\nVolume: 10.4 SOL\nBuys: 183')">
-        <h3>Dogewhiz</h3>
+        <img class="coin-logo" src="https://api.dicebear.com/7.x/pixel-art/png?seed=doge" alt="" />
+        <h3>Dogewhiz <span class="token-badge">Dog token</span><span class="verified">✔</span></h3>
         <p>Price: 0.002 SOL</p>
-        <p>Volume: 10.4 SOL</p>
-        <p>Buys: 183</p>
+        <p>Volume: 10.4 SOL &nbsp; • &nbsp; Buys: 183</p>
       </div>
       <div class="coin-card" onclick="openModal('PepeGod\nPrice: 0.006 SOL\nVolume: 24.1 SOL\nBuys: 350')">
-        <h3>PepeGod</h3>
+        <img class="coin-logo" src="https://api.dicebear.com/7.x/pixel-art/png?seed=pepe" alt="" />
+        <h3>PepeGod <span class="token-badge">Frog</span><span class="verified">✔</span></h3>
         <p>Price: 0.006 SOL</p>
-        <p>Volume: 24.1 SOL</p>
-        <p>Buys: 350</p>
+        <p>Volume: 24.1 SOL &nbsp; • &nbsp; Buys: 350</p>
       </div>
     </div>
   </section>
-  
   <section class="section">
     <h2>🔥 Main Coins</h2>
     <div class="coin-grid">
       <div class="coin-card" onclick="openModal('RugKing\nPrice: 0.001 SOL\nVolume: 4.5 SOL\nBuys: 90')">
-        <h3>RugKing</h3>
+        <img class="coin-logo" src="https://api.dicebear.com/7.x/pixel-art/png?seed=rug" alt="" />
+        <h3>RugKing <span class="token-badge">Risky</span></h3>
         <p>Price: 0.001 SOL</p>
-        <p>Volume: 4.5 SOL</p>
-        <p>Buys: 90</p>
+        <p>Volume: 4.5 SOL &nbsp; • &nbsp; Buys: 90</p>
       </div>
       <div class="coin-card" onclick="openModal('SnipeMax\nPrice: 0.004 SOL\nVolume: 13.7 SOL\nBuys: 200')">
-        <h3>SnipeMax</h3>
+        <img class="coin-logo" src="https://api.dicebear.com/7.x/pixel-art/png?seed=max" alt="" />
+        <h3>SnipeMax <span class="token-badge">Sniper</span></h3>
         <p>Price: 0.004 SOL</p>
-        <p>Volume: 13.7 SOL</p>
-        <p>Buys: 200</p>
+        <p>Volume: 13.7 SOL &nbsp; • &nbsp; Buys: 200</p>
       </div>
     </div>
   </section>
-  
   <section class="features">
     <h2>✨ What makes zeroLP different?</h2>
     <ul>
@@ -234,36 +214,68 @@
     </ul>
   </section>
   <section class="section">
-  <h2>💬 Reviews</h2>
-  <div class="reviews">
-    <div class="review">
-      <strong>@solDegen69</strong>: “This platform changed the game! Launched my coin in 2 mins.”
+    <h2>💬 Reviews</h2>
+    <div class="reviews">
+      <div class="review profile-soldegen"><strong>@solDegen69</strong>: “This platform changed the game! Launched my coin in 2 mins.”</div>
+      <div class="review profile-rugsurvivor"><strong>@rugPullSurvivor</strong>: “Finally a launchpad where I don’t get rugged!”</div>
+      <div class="review profile-memeoverlord"><strong>@memeOverlord</strong>: “zeroLP is fire 🔥🔥. Degens only!”</div>
     </div>
-    <div class="review">
-      <strong>@rugPullSurvivor</strong>: “Finally a launchpad where I don’t get rugged!”
-    </div>
-    <div class="review">
-      <strong>@memeOverlord</strong>: “zeroLP is fire 🔥🔥. Degens only!”
-    </div>
-  </div>
-</section>
+  </section>
   <footer>
     <p>© 2025 zeroLP — Built for degens, not devs.</p>
   </footer>
-  
   <div id="modal" class="modal" style="display: none;" onclick="closeModal(event)">
     <div class="modal-content" id="modal-content"></div>
   </div>
-  
-  <script>
-    function openModal(content) {
-      document.getElementById('modal-content').innerText = content;
-      document.getElementById('modal').style.display = 'flex';
+  <script type="module">
+    import {
+      Connection, clusterApiUrl,
+      PublicKey, Transaction, SystemProgram
+    } from "https://cdn.skypack.dev/@solana/web3.js";
+
+    const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
+    const programId = new PublicKey("3ugca5BBYB4zFPHmfUe8KUcZhs2tvVGBdNnMA6dqwM8z");
+    let wallet;
+    window.connectWallet = async function () {
+      if (window.solana && window.solana.isPhantom) {
+        try {
+          const resp = await window.solana.connect();
+          wallet = resp.publicKey;
+          updateWalletUI(wallet.toBase58());
+          statusBanner("Wallet connected!", "good");
+        } catch (err) {
+          statusBanner("Wallet connection failed", "bad");
+        }
+      } else statusBanner("Install Phantom Wallet to connect", "bad");
+    };
+    window.disconnectWallet = function () {
+      wallet = null;
+      updateWalletUI("");
+      statusBanner("Disconnected", "neutral");
+    };
+    function updateWalletUI(addr) {
+      document.getElementById("wallet-status").innerHTML = addr ? 
+        `<div class="wallet-pill"><span id="wallet-address">${addr.slice(0,4)}...${addr.slice(-4)}</span>
+         <button onclick="disconnectWallet()">Disconnect</button></div>` : "";
+      document.getElementById("connectBtn").style.display = addr ? "none" : "inline-block";
     }
-    function closeModal(event) {
-      if (event.target.id === 'modal') {
-        document.getElementById('modal').style.display = 'none';
-      }
+    function statusBanner(text, type) {
+      let banner = document.getElementById("status-banner");
+      banner.textContent = text;
+      banner.style.background = type == "good" ? "linear-gradient(90deg,#00ffbc,#c6fff4)" :
+         type == "bad" ?  "linear-gradient(90deg,#ff7598,#ff7396,#fff1)" :
+         "linear-gradient(90deg,#ff00ff,#00ffff)";
+      banner.style.color = type == "bad" ? "#111" : "#222";
+      banner.style.display = "block";
+      setTimeout(()=>banner.style.display="none",2300);
+    }
+    window.openModal = function(content){
+      let html = `<button class="modal-close" onclick="document.getElementById('modal').style.display='none';event.stopPropagation();">✖</button><div>${content.replace(/\n/g,'<br>')}</div>`;
+      document.getElementById('modal-content').innerHTML = html;
+      document.getElementById('modal').style.display = 'flex';
+    };
+    window.closeModal = function(event){
+      if(event.target.id === 'modal')document.getElementById('modal').style.display = 'none';
     }
   </script>
 </body>
